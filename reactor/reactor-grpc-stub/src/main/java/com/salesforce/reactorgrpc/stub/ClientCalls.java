@@ -54,7 +54,7 @@ public final class ClientCalls {
                         }),
                         emitter::error
                     ))
-                    .transform(Operators.lift(new SubscribeOnlyOnceLifter<TResponse>()));
+                    .transform(Operators.lift(new SubscribeOnlyOnceLifter<>()));
         } catch (Throwable throwable) {
             return Mono.error(throwable);
         }

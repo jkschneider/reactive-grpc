@@ -27,7 +27,7 @@ public class TestSubscriberProducer<T> extends AbstractSubscriberAndProducer<T>
             int m = f.requestFusion(QueueSubscription.ANY);
 
             if (m != QueueSubscription.NONE) {
-                return new FusionAwareQueueSubscriptionAdapter<T>(f, m);
+                return new FusionAwareQueueSubscriptionAdapter<>(f, m);
             }
         }
 

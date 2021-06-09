@@ -72,7 +72,7 @@ public final class ClientCalls {
                         );
                     }
                 })
-                .lift(new SubscribeOnlyOnceSingleOperator<TResponse>());
+                .lift(new SubscribeOnlyOnceSingleOperator<>());
         } catch (Throwable throwable) {
             return Single.error(throwable);
         }
@@ -96,7 +96,7 @@ public final class ClientCalls {
                         @Override
                         public Publisher<? extends TResponse> apply(TRequest request) {
                             final RxClientStreamObserverAndPublisher<TResponse> consumerStreamObserver =
-                                new RxClientStreamObserverAndPublisher<TResponse>(null, null, prefetch, lowTide);
+                                new RxClientStreamObserverAndPublisher<>(null, null, prefetch, lowTide);
 
                             delegate.accept(request, consumerStreamObserver);
 
@@ -119,9 +119,9 @@ public final class ClientCalls {
             final CallOptions options) {
         try {
             final RxSubscriberAndClientProducer<TRequest> subscriberAndGRPCProducer =
-                    flowableSource.subscribeWith(new RxSubscriberAndClientProducer<TRequest>());
+                    flowableSource.subscribeWith(new RxSubscriberAndClientProducer<>());
             final RxClientStreamObserverAndPublisher<TResponse> observerAndPublisher =
-                new RxClientStreamObserverAndPublisher<TResponse>(
+                new RxClientStreamObserverAndPublisher<>(
                     new com.salesforce.reactivegrpc.common.Consumer<CallStreamObserver<?>>() {
                         @Override
                         public void accept(CallStreamObserver<?> observer) {
@@ -159,9 +159,9 @@ public final class ClientCalls {
 
         try {
             final RxSubscriberAndClientProducer<TRequest> subscriberAndGRPCProducer =
-                    flowableSource.subscribeWith(new RxSubscriberAndClientProducer<TRequest>());
+                    flowableSource.subscribeWith(new RxSubscriberAndClientProducer<>());
             final RxClientStreamObserverAndPublisher<TResponse> observerAndPublisher =
-                new RxClientStreamObserverAndPublisher<TResponse>(
+                new RxClientStreamObserverAndPublisher<>(
                     new com.salesforce.reactivegrpc.common.Consumer<CallStreamObserver<?>>() {
                         @Override
                         public void accept(CallStreamObserver<?> observer) {

@@ -30,7 +30,7 @@ public class RxSubscriberAndServerProducer<T>
             int m = f.requestFusion(QueueSubscription.ANY);
 
             if (m != QueueSubscription.NONE) {
-                return new FusionAwareQueueSubscriptionAdapter<T>(f, m);
+                return new FusionAwareQueueSubscriptionAdapter<>(f, m);
             }
         }
 

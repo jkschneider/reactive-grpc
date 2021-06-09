@@ -38,7 +38,7 @@ public class StreamObserverAndPublisherTest {
     static final ExecutorService requestExecutorService =
         Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
-    final Queue<Throwable> unhandledThrowable = new ConcurrentLinkedQueue<Throwable>();
+    final Queue<Throwable> unhandledThrowable = new ConcurrentLinkedQueue<>();
 
 
     @BeforeEach
@@ -54,7 +54,7 @@ public class StreamObserverAndPublisherTest {
     @RepeatedTest(2)
     public void multithreadingRegularTest() {
         TestStreamObserverAndPublisher<Integer> processor =
-            new TestStreamObserverAndPublisher<Integer>(null);
+            new TestStreamObserverAndPublisher<>(null);
         int countPerThread = 1000000;
         TestCallStreamObserverProducer observer =
             new TestCallStreamObserverProducer(executorService, processor, countPerThread);
@@ -92,14 +92,14 @@ public class StreamObserverAndPublisherTest {
     public void multithreadingFussedTest() {
 
         TestStreamObserverAndPublisher<Integer> processor =
-            new TestStreamObserverAndPublisher<Integer>(null);
+            new TestStreamObserverAndPublisher<>(null);
         int countPerThread = 1000000;
         TestCallStreamObserverProducer observer =
             new TestCallStreamObserverProducer(executorService, processor, countPerThread);
         processor.onSubscribe(observer);
         final TestSubscriber<Integer> testSubscriber = Flowable
             .fromPublisher(processor)
-            .subscribeWith(new FussedTestSubscriber<Integer>());
+            .subscribeWith(new FussedTestSubscriber<>());
 
         for (int i = 0; i < countPerThread; i++) {
             requestExecutorService.execute(new Runnable() {
@@ -129,9 +129,9 @@ public class StreamObserverAndPublisherTest {
     @RepeatedTest(2)
     public void shouldSupportOnlySingleSubscriberTest() throws InterruptedException {
         for (int i = 0; i < 1000; i++) {
-            final TestSubscriber<Integer> downstream1 = new TestSubscriber<Integer>(0);
-            final TestSubscriber<Integer> downstream2 = new TestSubscriber<Integer>(0);
-            final TestStreamObserverAndPublisher<Integer> processor = new TestStreamObserverAndPublisher<Integer>(null);
+            final TestSubscriber<Integer> downstream1 = new TestSubscriber<>(0);
+            final TestSubscriber<Integer> downstream2 = new TestSubscriber<>(0);
+            final TestStreamObserverAndPublisher<Integer> processor = new TestStreamObserverAndPublisher<>(null);
             final CountDownLatch latch = new CountDownLatch(1);
             executorService.execute(new Runnable() {
                 @Override
@@ -163,8 +163,8 @@ public class StreamObserverAndPublisherTest {
     @RepeatedTest(2)
     public void shouldSupportOnlySingleSubscriptionTest() throws InterruptedException {
         for (int i = 0; i < 1000; i++) {
-            final AtomicReference<Throwable> throwableAtomicReference = new AtomicReference<Throwable>();
-            final TestStreamObserverAndPublisher<Integer> processor = new TestStreamObserverAndPublisher<Integer>(null);
+            final AtomicReference<Throwable> throwableAtomicReference = new AtomicReference<>();
+            final TestStreamObserverAndPublisher<Integer> processor = new TestStreamObserverAndPublisher<>(null);
             final TestCallStreamObserverProducer upstream = new TestCallStreamObserverProducer(executorService, processor, 100000000);
             final CountDownLatch latch = new CountDownLatch(1);
             final CountDownLatch throwingLatch = new CountDownLatch(1);
@@ -201,8 +201,8 @@ public class StreamObserverAndPublisherTest {
     @RepeatedTest(2)
     public void shouldSupportOnlySinglePrefetchTest() throws InterruptedException {
         for (int i = 0; i < 10; i++) {
-            final TestSubscriber<Integer> downstream = new TestSubscriber<Integer>(0);
-            final TestStreamObserverAndPublisher<Integer> processor = new TestStreamObserverAndPublisher<Integer>(null);
+            final TestSubscriber<Integer> downstream = new TestSubscriber<>(0);
+            final TestStreamObserverAndPublisher<Integer> processor = new TestStreamObserverAndPublisher<>(null);
             final TestCallStreamObserverProducer upstream = new TestCallStreamObserverProducer(executorService, processor, 100000000);
             processor.onSubscribe(upstream);
             upstream.requested = 1; // prevents running elements sending but allows
@@ -242,7 +242,7 @@ public class StreamObserverAndPublisherTest {
 
         public TestStreamObserverAndPublisher(
             com.salesforce.reactivegrpc.common.Consumer<CallStreamObserver<?>> onSubscribe) {
-            super(new ConcurrentLinkedQueue<T>(), onSubscribe);
+            super(new ConcurrentLinkedQueue<>(), onSubscribe);
         }
 
         @Override

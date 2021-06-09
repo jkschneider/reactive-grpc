@@ -30,7 +30,7 @@ public class BackpressureChunkingTest {
         int num = chunkSize * 2;
 
         AbstractStreamObserverAndPublisher<Long> source =
-                new TestStreamObserverAndPublisherWithFusion<Long>(new ConcurrentLinkedQueue<Long>(), null);
+                new TestStreamObserverAndPublisherWithFusion<>(new ConcurrentLinkedQueue<>(), null);
         AsyncRangeCallStreamObserver observer = new AsyncRangeCallStreamObserver(Executors.newSingleThreadExecutor(), source, num);
         source.onSubscribe(observer);
         TestSubscriber<Long> testSubscriber = Flowable.fromPublisher(source)
@@ -52,7 +52,7 @@ public class BackpressureChunkingTest {
         int num = chunkSize * 2;
 
         AbstractStreamObserverAndPublisher<Long> source =
-                new TestStreamObserverAndPublisherWithFusion<Long>(new ConcurrentLinkedQueue<Long>(), null);
+                new TestStreamObserverAndPublisherWithFusion<>(new ConcurrentLinkedQueue<>(), null);
         AsyncRangeCallStreamObserver observer = new AsyncRangeCallStreamObserver(Executors.newSingleThreadExecutor(), source, num);
         source.onSubscribe(observer);
         TestSubscriber<Long> testSubscriber = Flowable.fromPublisher(source)
@@ -73,7 +73,7 @@ public class BackpressureChunkingTest {
         int num = chunkSize * 2;
 
         AbstractStreamObserverAndPublisher<Long> source =
-                new TestStreamObserverAndPublisherWithFusion<Long>(new ConcurrentLinkedQueue<Long>(), null);
+                new TestStreamObserverAndPublisherWithFusion<>(new ConcurrentLinkedQueue<>(), null);
         AsyncRangeCallStreamObserver observer = new AsyncRangeCallStreamObserver(Executors.newSingleThreadExecutor(), source, num);
         source.onSubscribe(observer);
         TestSubscriber<Long> testSubscriber = Flowable.fromPublisher(source)
@@ -96,7 +96,7 @@ public class BackpressureChunkingTest {
         int num = chunkSize * 2;
 
         AbstractStreamObserverAndPublisher<Long> source =
-                new TestStreamObserverAndPublisherWithFusion<Long>(new ConcurrentLinkedQueue<Long>(), null);
+                new TestStreamObserverAndPublisherWithFusion<>(new ConcurrentLinkedQueue<>(), null);
         AsyncRangeCallStreamObserver observer = new AsyncRangeCallStreamObserver(Executors.newSingleThreadExecutor(), source, num);
         source.onSubscribe(observer);
         TestSubscriber<Long> testSubscriber = Flowable.fromPublisher(source)
@@ -118,7 +118,7 @@ public class BackpressureChunkingTest {
         int chunkSize = DEFAULT_CHUNK_SIZE;
 
         AbstractStreamObserverAndPublisher<Long> source =
-                new AbstractStreamObserverAndPublisher<Long>(new ConcurrentLinkedQueue<Long>(), null){};
+                new AbstractStreamObserverAndPublisher<Long>(new ConcurrentLinkedQueue<>(), null){};
         AsyncRangeCallStreamObserver observer = new AsyncRangeCallStreamObserver(Executors.newSingleThreadExecutor(), source, 24);
         source.onSubscribe(observer);
         TestSubscriber<Long> testSubscriber = Flowable.fromPublisher(source)

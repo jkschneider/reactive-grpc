@@ -76,7 +76,7 @@ public final class ServerCalls {
 
             final Flowable<TResponse> rxResponse = Preconditions.checkNotNull(delegate.apply(rxRequest));
             final RxSubscriberAndServerProducer<TResponse> serverProducer =
-                    rxResponse.subscribeWith(new RxSubscriberAndServerProducer<TResponse>());
+                    rxResponse.subscribeWith(new RxSubscriberAndServerProducer<>());
             serverProducer.subscribe((ServerCallStreamObserver<TResponse>) responseObserver);
         } catch (Throwable throwable) {
             responseObserver.onError(prepareError(throwable));
@@ -96,7 +96,7 @@ public final class ServerCalls {
         final int lowTide = RxCallOptions.getLowTide(options);
 
         final RxServerStreamObserverAndPublisher<TRequest> streamObserverPublisher =
-                new RxServerStreamObserverAndPublisher<TRequest>((ServerCallStreamObserver<TResponse>) responseObserver, null, prefetch, lowTide);
+                new RxServerStreamObserverAndPublisher<>((ServerCallStreamObserver<TResponse>) responseObserver, null, prefetch, lowTide);
 
         try {
             final Single<TResponse> rxResponse = Preconditions.checkNotNull(delegate.apply(Flowable.fromPublisher(streamObserverPublisher)));
@@ -142,11 +142,11 @@ public final class ServerCalls {
         final int lowTide = RxCallOptions.getLowTide(options);
 
         final RxServerStreamObserverAndPublisher<TRequest> streamObserverPublisher =
-                new RxServerStreamObserverAndPublisher<TRequest>((ServerCallStreamObserver<TResponse>) responseObserver, null, prefetch, lowTide);
+                new RxServerStreamObserverAndPublisher<>((ServerCallStreamObserver<TResponse>) responseObserver, null, prefetch, lowTide);
 
         try {
             final Flowable<TResponse> rxResponse = Preconditions.checkNotNull(delegate.apply(Flowable.fromPublisher(streamObserverPublisher)));
-            final RxSubscriberAndServerProducer<TResponse> subscriber = new RxSubscriberAndServerProducer<TResponse>();
+            final RxSubscriberAndServerProducer<TResponse> subscriber = new RxSubscriberAndServerProducer<>();
             subscriber.subscribe((ServerCallStreamObserver<TResponse>) responseObserver);
             // Don't try to respond if the server has already canceled the request
             rxResponse.subscribe(subscriber);

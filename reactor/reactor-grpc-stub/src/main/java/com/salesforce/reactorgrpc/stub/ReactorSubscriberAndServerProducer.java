@@ -30,7 +30,7 @@ public class ReactorSubscriberAndServerProducer<T>
             int m = f.requestFusion(Fuseable.ANY);
 
             if (m != Fuseable.NONE) {
-                return new FusionAwareQueueSubscriptionAdapter<T>(f, m);
+                return new FusionAwareQueueSubscriptionAdapter<>(f, m);
             }
         }
 

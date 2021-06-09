@@ -17,7 +17,7 @@ import io.grpc.stub.StreamObserver;
 
 public class AsyncRangeCallStreamObserver extends ClientCallStreamObserver<Long> {
 
-    final Queue<Integer>  requestsQueue = new ConcurrentLinkedQueue<Integer>();
+    final Queue<Integer>  requestsQueue = new ConcurrentLinkedQueue<>();
     final AtomicLong      requested     = new AtomicLong();
 
     final ExecutorService      executorService;

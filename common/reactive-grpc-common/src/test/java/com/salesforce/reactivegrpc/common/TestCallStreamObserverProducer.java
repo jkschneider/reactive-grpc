@@ -24,7 +24,7 @@ public class TestCallStreamObserverProducer extends CallStreamObserver<Integer> 
 
     private static final long serialVersionUID = 2587302975077663557L;
 
-    final Queue<java.lang.Integer> requestsQueue = new ConcurrentLinkedQueue<java.lang.Integer>();
+    final Queue<java.lang.Integer> requestsQueue = new ConcurrentLinkedQueue<>();
     final int end;
     final ExecutorService executorService;
     final StreamObserver<? super Integer> actual;

@@ -25,7 +25,7 @@ class RxClientStreamObserverAndPublisher<T>
     RxClientStreamObserverAndPublisher(
             Consumer<CallStreamObserver<?>> onSubscribe,
             Runnable onTerminate) {
-        super(new SimpleQueueAdapter<T>(new SpscArrayQueue<T>(DEFAULT_CHUNK_SIZE)), onSubscribe, onTerminate);
+        super(new SimpleQueueAdapter<>(new SpscArrayQueue<>(DEFAULT_CHUNK_SIZE)), onSubscribe, onTerminate);
     }
 
     RxClientStreamObserverAndPublisher(
@@ -33,7 +33,7 @@ class RxClientStreamObserverAndPublisher<T>
             Runnable onTerminate,
             int prefetch,
             int lowTide) {
-        super(new SimpleQueueAdapter<T>(new SpscArrayQueue<T>(prefetch)), onSubscribe, onTerminate, prefetch, lowTide);
+        super(new SimpleQueueAdapter<>(new SpscArrayQueue<>(prefetch)), onSubscribe, onTerminate, prefetch, lowTide);
     }
 
     @Override

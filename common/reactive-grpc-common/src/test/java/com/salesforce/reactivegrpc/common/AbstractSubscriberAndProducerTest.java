@@ -40,7 +40,7 @@ import org.reactivestreams.Subscription;
 
 public class AbstractSubscriberAndProducerTest {
 
-    private final Queue<Throwable> unhandledThrowable = new ConcurrentLinkedQueue<Throwable>();
+    private final Queue<Throwable> unhandledThrowable = new ConcurrentLinkedQueue<>();
 
     private static final ExecutorService executorService  =
         Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
@@ -58,10 +58,10 @@ public class AbstractSubscriberAndProducerTest {
 
     @RepeatedTest(2)
     public void shouldSupportOnlySingleSubscribersTest() throws InterruptedException {
-        final TestCallStreamObserver<Integer> downstream = new TestCallStreamObserver<Integer>(executorService);
+        final TestCallStreamObserver<Integer> downstream = new TestCallStreamObserver<>(executorService);
         for (int i = 0; i < 1000; i++) {
-            final AtomicReference<Throwable> throwableAtomicReference = new AtomicReference<Throwable>();
-            final TestSubscriberProducer<Integer> producer = new TestSubscriberProducer<Integer>();
+            final AtomicReference<Throwable> throwableAtomicReference = new AtomicReference<>();
+            final TestSubscriberProducer<Integer> producer = new TestSubscriberProducer<>();
             final CountDownLatch latch = new CountDownLatch(1);
             final CountDownLatch throwingLatch = new CountDownLatch(1);
             executorService.execute(new Runnable() {
@@ -152,9 +152,9 @@ public class AbstractSubscriberAndProducerTest {
                                                                }
                                                            })
                                                            .hide()
-                                                           .subscribeWith(new TestSubscriberProducer<Integer>());
+                                                           .subscribeWith(new TestSubscriberProducer<>());
 
-        TestCallStreamObserver<Integer> downstream = new TestCallStreamObserver<Integer>(
+        TestCallStreamObserver<Integer> downstream = new TestCallStreamObserver<>(
             executorService);
         producer.subscribe(downstream);
 
@@ -180,9 +180,9 @@ public class AbstractSubscriberAndProducerTest {
                                                            .hide()
                                                            .subscribeOn(Schedulers.io())
                                                            .observeOn(Schedulers.io(), true)
-                                                           .subscribeWith(new TestSubscriberProducer<Integer>());
+                                                           .subscribeWith(new TestSubscriberProducer<>());
 
-        TestCallStreamObserver<Integer> downstream = new TestCallStreamObserver<Integer>(executorService);
+        TestCallStreamObserver<Integer> downstream = new TestCallStreamObserver<>(executorService);
         producer.subscribe(downstream);
 
         racePauseResuming(downstream, 10000);
@@ -203,10 +203,10 @@ public class AbstractSubscriberAndProducerTest {
 
         final CountDownLatch startedLatch = new CountDownLatch(1);
         final TestSubscriberProducer<Integer> producer = Flowable.fromIterable(integers)
-                                                           .subscribeWith(new TestSubscriberProducer<Integer>());
+                                                           .subscribeWith(new TestSubscriberProducer<>());
 
         final TestCallStreamObserver<Integer> downstream =
-            new TestCallStreamObserver<Integer>(executorService);
+            new TestCallStreamObserver<>(executorService);
         executorService.execute(new Runnable() {
             @Override
             public void run() {
@@ -234,7 +234,7 @@ public class AbstractSubscriberAndProducerTest {
                                          .toList()
                                          .blockingGet();
 
-        ArrayList<Integer> copy = new ArrayList<Integer>(integers);
+        ArrayList<Integer> copy = new ArrayList<>(integers);
 
         copy.add(null);
 
@@ -257,9 +257,9 @@ public class AbstractSubscriberAndProducerTest {
                                                                }
                                                            })
                                                            .hide()
-                                                           .subscribeWith(new TestSubscriberProducer<Integer>());
+                                                           .subscribeWith(new TestSubscriberProducer<>());
 
-        TestCallStreamObserver<Integer> downstream = new TestCallStreamObserver<Integer>(
+        TestCallStreamObserver<Integer> downstream = new TestCallStreamObserver<>(
             executorService);
         producer.subscribe(downstream);
 
@@ -283,16 +283,16 @@ public class AbstractSubscriberAndProducerTest {
                                          .toList()
                                          .blockingGet();
 
-        ArrayList<Integer> copy = new ArrayList<Integer>(integers);
+        ArrayList<Integer> copy = new ArrayList<>(integers);
 
         copy.add(null);
 
         TestSubscriberProducer<Integer> producer = Flowable.fromIterable(copy)
                                                            .hide()
                                                            .observeOn(Schedulers.computation(), true)
-                                                           .subscribeWith(new TestSubscriberProducer<Integer>());
+                                                           .subscribeWith(new TestSubscriberProducer<>());
 
-        TestCallStreamObserver<Integer> downstream = new TestCallStreamObserver<Integer>(
+        TestCallStreamObserver<Integer> downstream = new TestCallStreamObserver<>(
             executorService);
         producer.subscribe(downstream);
 
@@ -336,9 +336,9 @@ public class AbstractSubscriberAndProducerTest {
                                                                    return i;
                                                                }
                                                            })
-                                                           .subscribeWith(new TestSubscriberProducer<Integer>());
+                                                           .subscribeWith(new TestSubscriberProducer<>());
 
-        TestCallStreamObserver<Integer> downstream = new TestCallStreamObserver<Integer>(
+        TestCallStreamObserver<Integer> downstream = new TestCallStreamObserver<>(
             executorService);
         producer.subscribe(downstream);
 
@@ -365,7 +365,7 @@ public class AbstractSubscriberAndProducerTest {
                                          .blockingGet();
 
         final CountDownLatch startedLatch = new CountDownLatch(1);
-        final TestSubscriberProducer<Integer> producer = Flowable.fromIterable(new SlowingIterable<Integer>(integers))
+        final TestSubscriberProducer<Integer> producer = Flowable.fromIterable(new SlowingIterable<>(integers))
                                                                  .map(new Function<Integer, Integer>() {
                                                                      @Override
                                                                      public Integer apply(Integer i) {
@@ -385,7 +385,7 @@ public class AbstractSubscriberAndProducerTest {
                                                                  });
 
         final TestCallStreamObserver<Integer> downstream =
-            new TestCallStreamObserver<Integer>(executorService);
+            new TestCallStreamObserver<>(executorService);
         executorService.execute(new Runnable() {
             @Override
             public void run() {
@@ -443,9 +443,9 @@ public class AbstractSubscriberAndProducerTest {
                                                                }
                                                            })
                                                            .hide()
-                                                           .subscribeWith(new TestSubscriberProducer<Integer>());
+                                                           .subscribeWith(new TestSubscriberProducer<>());
 
-        TestCallStreamObserver<Integer> downstream = new TestCallStreamObserver<Integer>(
+        TestCallStreamObserver<Integer> downstream = new TestCallStreamObserver<>(
             executorService);
         producer.subscribe(downstream);
 
@@ -484,9 +484,9 @@ public class AbstractSubscriberAndProducerTest {
                                                            .hide()
                                                            .subscribeOn(Schedulers.io())
                                                            .observeOn(Schedulers.io(), true)
-                                                           .subscribeWith(new TestSubscriberProducer<Integer>());
+                                                           .subscribeWith(new TestSubscriberProducer<>());
 
-        TestCallStreamObserver<Integer> downstream = new TestCallStreamObserver<Integer>(
+        TestCallStreamObserver<Integer> downstream = new TestCallStreamObserver<>(
             executorService);
         producer.subscribe(downstream);
 
@@ -513,7 +513,7 @@ public class AbstractSubscriberAndProducerTest {
                                          .blockingGet();
 
         final CountDownLatch startedLatch = new CountDownLatch(1);
-        final TestSubscriberProducer<Integer> producer = Flowable.fromIterable(new SlowingIterable<Integer>(integers))
+        final TestSubscriberProducer<Integer> producer = Flowable.fromIterable(new SlowingIterable<>(integers))
                                                                  .subscribeWith(new TestSubscriberProducer<Integer>() {
                                                                      @Override
                                                                      public void cancel() {
@@ -523,7 +523,7 @@ public class AbstractSubscriberAndProducerTest {
                                                                  });
 
         final TestCallStreamObserver<Integer> downstream =
-            new TestCallStreamObserver<Integer>(executorService);
+            new TestCallStreamObserver<>(executorService);
         executorService.execute(new Runnable() {
             @Override
             public void run() {
@@ -581,9 +581,9 @@ public class AbstractSubscriberAndProducerTest {
                                                                }
                                                            })
                                                            .hide()
-                                                           .subscribeWith(new TestSubscriberProducer<Integer>());
+                                                           .subscribeWith(new TestSubscriberProducer<>());
 
-        TestCallStreamObserver<Integer> downstream = new TestCallStreamObserver<Integer>(
+        TestCallStreamObserver<Integer> downstream = new TestCallStreamObserver<>(
             executorService);
         producer.subscribe(downstream);
 
@@ -620,9 +620,9 @@ public class AbstractSubscriberAndProducerTest {
                                                            })
                                                            .subscribeOn(Schedulers.io())
                                                            .observeOn(Schedulers.io(), true)
-                                                           .subscribeWith(new TestSubscriberProducer<Integer>());
+                                                           .subscribeWith(new TestSubscriberProducer<>());
 
-        TestCallStreamObserver<Integer> downstream = new TestCallStreamObserver<Integer>(
+        TestCallStreamObserver<Integer> downstream = new TestCallStreamObserver<>(
             executorService);
         producer.subscribe(downstream);
 
@@ -649,7 +649,7 @@ public class AbstractSubscriberAndProducerTest {
                                          .blockingGet();
 
         final CountDownLatch startedLatch = new CountDownLatch(1);
-        final TestSubscriberProducer<Integer> producer = Flowable.fromIterable(new SlowingIterable<Integer>(integers))
+        final TestSubscriberProducer<Integer> producer = Flowable.fromIterable(new SlowingIterable<>(integers))
                                                                  .subscribeWith(new TestSubscriberProducer<Integer>() {
                                                                      @Override
                                                                      public void cancel() {
@@ -659,7 +659,7 @@ public class AbstractSubscriberAndProducerTest {
                                                                  });
 
         final TestCallStreamObserver<Integer> downstream =
-            new TestCallStreamObserver<Integer>(executorService);
+            new TestCallStreamObserver<>(executorService);
         executorService.execute(new Runnable() {
             @Override
             public void run() {
@@ -686,7 +686,7 @@ public class AbstractSubscriberAndProducerTest {
     
     @Test
     public void canCancelBeforeOnSubscribeTest() {
-        TestSubscriberProducer<Integer> producer = new TestSubscriberProducer<Integer>();
+        TestSubscriberProducer<Integer> producer = new TestSubscriberProducer<>();
         producer.cancel();
         Assertions.assertThat(producer.isCanceled()).isTrue();
     }
@@ -739,7 +739,7 @@ public class AbstractSubscriberAndProducerTest {
 
         @Override
         public Iterator<T> iterator() {
-            return new SlowingIterator<T>(iterable.iterator());
+            return new SlowingIterator<>(iterable.iterator());
         }
 
         static class SlowingIterator<T> implements Iterator<T> {
@@ -774,7 +774,7 @@ public class AbstractSubscriberAndProducerTest {
 
     private static class TestCallStreamObserver<T> extends CallStreamObserver<T> {
         final ExecutorService executorService;
-        List<T> collected = new ArrayList<T>();
+        List<T> collected = new ArrayList<>();
         Throwable e;
         Runnable onReadyHandler;
         volatile boolean ready;

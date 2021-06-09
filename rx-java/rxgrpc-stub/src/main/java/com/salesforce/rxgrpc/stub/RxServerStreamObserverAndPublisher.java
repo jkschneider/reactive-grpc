@@ -28,7 +28,7 @@ class RxServerStreamObserverAndPublisher<T>
             Consumer<CallStreamObserver<?>> onSubscribe,
             int prefetch,
             int lowTide) {
-        super(serverCallStreamObserver, new SimpleQueueAdapter<T>(new SpscArrayQueue<T>(prefetch)), onSubscribe, prefetch, lowTide);
+        super(serverCallStreamObserver, new SimpleQueueAdapter<>(new SpscArrayQueue<>(prefetch)), onSubscribe, prefetch, lowTide);
     }
 
     @Override
